@@ -1,5 +1,7 @@
 # README.md
 ##Collaborators
+
+-Miriam Aczel
 -Anna McPherran
 
 A `README.md` file is a very useful component of any project
