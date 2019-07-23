@@ -1,4 +1,6 @@
 # README.md
+##Collaborators
+-Anna McPherran
 
 A `README.md` file is a very useful component of any project
 repository; it is the first file that unfamiliar users will open to
