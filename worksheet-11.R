@@ -1,40 +1,43 @@
 # Documenting and Publishing your Data Worksheet
 
 # Preparing Data for Publication
-library(...)
+library(tidyverse)
 
-stm_dat <- ...("data/StormEvents.csv")
+stm_dat <- read_csv("data/StormEvents.csv")
 
-...(stm_dat)
-...(stm_dat)
+head(stm_dat)
+tail(stm_dat)
+str(stm_dat)
 
-...(stm_dat$EVENT_NARRATIVE) 
+unique(stm_dat$EVENT_NARRATIVE) 
 
-...('storm_project', showWarnings = FALSE)
-...(stm_dat, "storm_project/StormEvents_d2006.csv")
+#write a new derived file version as if you had made modifications like tidying (we didn't here)
+dir.create('storm_project', showWarnings = FALSE)
+write_csv(stm_dat, "storm_project/StormEvents_d2006.csv")
 
 # Creating metadata
-library(...) ; library(...)
+library(dataspice) 
+library(here)
 
-...(dir = "storm_project")
+create_spice(dir = "storm_project")
 
-...(stm_dat$YEAR)
-...(stm_dat$BEGIN_LAT, na.rm=TRUE)
-...(stm_dat$BEGIN_LON, na.rm=TRUE)
+range(stm_dat$YEAR)
+range(stm_dat$BEGIN_LAT, na.rm=TRUE)
+range(stm_dat$BEGIN_LON, na.rm=TRUE)
 
-...(metadata_dir = here("storm_project", "metadata"))
+edit_biblio(metadata_dir = here("storm_project", "metadata"))
 
-...(metadata_dir = here("storm_project", "metadata"))
+edit_creators(metadata_dir = here("storm_project", "metadata"))
 
-...(data_path = here("storm_project"),
-            access_path = here("storm_project", "metadata", "..."))
-...(metadata_dir = here("storm_project", "metadata"))
+prep_access(data_path = here("storm_project"),
+            access_path = here("storm_project", "metadata", "access.csv"))
+edit_access(metadata_dir = here("storm_project", "metadata"))
 
-...(data_path = here("storm_project"),
-                attributes_path = here("storm_project", "metadata", "..."))
-...(metadata_dir = here("storm_project", "metadata"))
+prep_attributes(data_path = here("storm_project"),
+                attributes_path = here("storm_project", "metadata", "attributes.csv"))
+edit_attributes(metadata_dir = here("storm_project", "metadata"))
 
-...(path = here("storm_project", "metadata"))
+write_spice(path = here("storm_project", "metadata"))
 
 library(...) ; library(...) ; library(...)
 
@@ -43,9 +46,9 @@ eml <- ...(json)
 ...(eml, "storm_project/metadata/dataspice.xml")
 
 # Creating a data package
-library(...) ; library(...)
+library(datapack) ; library(uuid)
 
-dp <- ...("DataPackage") # create empty data package
+dp <- new("DataPackage") # create empty data package
 
 ... <- "storm_project/metadata/dataspice.xml"
 ... <- paste("urn:uuid:", UUIDgenerate(), sep = "")
